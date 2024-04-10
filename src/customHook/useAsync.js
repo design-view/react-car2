@@ -34,13 +34,14 @@ function reducer(state,action){
             return state;
     }
 }
-function useAsync(callback,id){
+function useAsync(callback,id,dep=[]){
     const [state, dispatch] = useReducer(reducer,initialState);
     //데이터 요청
     async function fetchData(){
         //loading의 value를 true로 상태 업데이트
         dispatch({ type:"LOADING"});
         try{
+            console.log(id);
             const data = await callback(id);
             dispatch({ type:"SUCCESS", data: data})
         }
@@ -50,7 +51,7 @@ function useAsync(callback,id){
     }
     useEffect(()=>{
         fetchData();
-    },[])
+    },dep)
     return state;
 }
 export default useAsync;

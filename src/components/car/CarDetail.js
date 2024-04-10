@@ -1,6 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './CarDetail.css';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import useAsync from '../../customHook/useAsync';
+
+//전달할 함수/car/{carId}
+async function getCars(id){
+    const response = await axios.get("http://localhost:8081/car/"+id);
+    console.log(response);
+    return response.data;
+}
 function CarDetail() {
+    const { carId } = useParams();
+    //{loadgin:false, data: null, error: null}
+    
+    const { loading, data, error} = useAsync(getCars,carId,[carId]);
+    
+    
+    if(loading) return <div>로딩중...</div>;
+    if(error) return <div>에러가 발생했습니다.</div>;
+    if(!data) return null;
     return ( 
         <div>
             <div className="detail">
@@ -18,7 +37,7 @@ function CarDetail() {
                 <div className="detailInfo">
                     <div className="carInfo">
                         <div className="carTitle">
-                            KG모빌리티 렉스턴 스포츠 칸 2.2 디젤 4WD 5링크 프로페셔널 X
+                            {data.model}
                         </div>
                         <div>
                             <ul>
@@ -44,7 +63,7 @@ function CarDetail() {
                             <table>
                                 <tr>
                                     <td>휴대폰</td>
-                                    <td>010-1234-5678<br/>053-123-4567</td>
+                                    <td>{data.dealerDto.phone}<br/>053-123-4567</td>
                                 </tr>
                                 <tr>
                                     <td>종사원증</td>
@@ -56,7 +75,7 @@ function CarDetail() {
                                 </tr>
                                 <tr>
                                     <td>주소</td>
-                                    <td>대구 동구 안심로59길 22 (각산동) 신서랜드 3층 301호 올카모터스 지도 보기</td>
+                                    <td>{data.dealerDto.location}</td>
                                 </tr>
                             </table>
                         </div>

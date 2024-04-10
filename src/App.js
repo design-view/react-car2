@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+
 import './App.css';
 import Header from './components/Header';
 import CarList from './components/car/CarList';
@@ -22,7 +22,7 @@ function App() {
           <Route path='/login' element={<Login setAuth={setAuth}/>} />
           <Route path="/join" element={<Join/>} />
           <Route path='/addCar' element={<CarAdd/>} />
-          <Route path='/viewCar' element={<CarDetail/>} />
+          <Route path='/viewCar/:carId' element={<CarDetail/>} />
         </Routes>
       </div>
       

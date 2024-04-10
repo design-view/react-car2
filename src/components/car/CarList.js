@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import useAsync from '../../customHook/useAsync';
+import { Link } from 'react-router-dom';
 
 //전달할 함수
 async function getCars(){
@@ -30,9 +31,9 @@ function CarList() {
                     {data.map((car,index)=>
                         <tr key={index}>
                             <td>
-                           <img src={"http://localhost:8081/image?image="+car.imgName} width={200}/></td>
+                           <img src={"http://localhost:8081/image?image="+car.imgName} width={200} alt="aa"/></td>
                             <td>{car.brand}</td>
-                            <td>{car.model}</td>
+                            <td><Link to={"/viewCar/"+car.id}>{car.model}</Link></td>
                             <td>{car.color}</td>
                             <td>{car.price}</td>
                             

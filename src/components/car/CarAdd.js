@@ -76,7 +76,7 @@ function CarAdd() {
                     }
                 });
             //ok, fail
-            if(response.data=="ok"){
+            if(response.data==="ok"){
                 navigate("/")
             }
         }
